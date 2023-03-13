@@ -18,6 +18,11 @@ phases:
             - echo installing maven...
             - apt-get update -y
             - apt-get install -y maven
+            - echo Building the Jar file ...
+            - mvn install
+            - $$$$ echo sending the analysis to Sonarqube server ...
+            - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
+            - mvn sonar:sonar -Dsonar.host.url=http://43.205.209.112:9000/ -Dsonar.login=sqa_c8161f4ac2bd4e92e0cb6ea52e7a2ad97e6a9ab2
     pre_build:
         commands:
             #- echo Restore started on `date`
@@ -60,11 +65,11 @@ phases:
             # End - Verify the Sonar Quality Check Status
 
             #- dotnet publish --no-restore --output build_output            
-            - echo Building the Jar file ...
-            - mvn install
-            - $$$$ echo sending the analysis to Sonarqube server ...
-            - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
-            - mvn sonar:sonar -Dsonar.host.url=http://43.205.209.112:9000/ -Dsonar.login=sqa_c8161f4ac2bd4e92e0cb6ea52e7a2ad97e6a9ab2
+            #- echo Building the Jar file ...
+            #- mvn install
+            #- $$$$ echo sending the analysis to Sonarqube server ...
+            #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
+            #- mvn sonar:sonar -Dsonar.host.url=http://43.205.209.112:9000/ -Dsonar.login=sqa_c8161f4ac2bd4e92e0cb6ea52e7a2ad97e6a9ab2
             - echo Building the Docker image...
             - echo @@@@ REPOSITORY_URI $REPOSITORY_URI
             - echo @@@@ IMAGE_TAG $IMAGE_TAG
