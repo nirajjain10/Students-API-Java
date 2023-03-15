@@ -4,9 +4,9 @@ env:
     AWS_Region: "ap-south-1"
     AWS_AccountId: "051087528164"
     #Sonar_Project: "SRE-Demo"
-  #secrets-manager:
-    #Sonar_AccessToken: SRE_Secrets:Sonar_AccessToken
-    #Sonar_Host: SRE_Secrets:Sonar_Host  
+  secrets-manager:
+    Sonar_AccessToken: sonar-secret:Sonar_AccessToken
+    Sonar_Host: sonar-secret:Sonar_Host  
 phases:
     install:
         commands:
@@ -27,9 +27,9 @@ phases:
             #- export PATH="$PATH:/var/opt/sonar-scanner-4.7.0.2747-linux/bin"
             #- sonar-scanner -v
             - echo @@ sending the analysis to Sonarqube server ...
-            #- sonar-scanner -v
             - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install
-            - mvn sonar:sonar -Dsonar.host.url=http://43.205.242.208:9000/ -Dsonar.login=sqa_c8161f4ac2bd4e92e0cb6ea52e7a2ad97e6a9ab2
+            #- mvn sonar:sonar -Dsonar.host.url=http://43.205.242.208:9000/ -Dsonar.login=sqa_c8161f4ac2bd4e92e0cb6ea52e7a2ad97e6a9ab2
+            - mvn sonar:sonar -Dsonar.host.url=Sonar_Host -Dsonar.login=Sonar_AccessToken
     pre_build:
         commands:
             #- echo Restore started on `date`
